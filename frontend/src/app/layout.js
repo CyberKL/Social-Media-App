@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Suggestions from "@/components/Suggestions";
 import { Web3Provider } from "@/contexts/Web3Context";
 
+
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -38,7 +39,6 @@ export default function RootLayout({ children }) {
               </div>
             </div>
           </div>
-
         </body>
       </html>
     </Web3Provider>
