@@ -11,8 +11,8 @@ contract User {
     mapping (address=>UserData) public users;
 
     function register(string memory _username, string memory _bio) public {
-        require(!users[_userAddress].isRegistered, "User already registered");
-        users[msg.sender] = UserData(_username, _bio, true);
+        require(!users[msg.sender].isRegistered, "User already registered");
+        users[msg.sender] = UserData(true, _username, _bio);
     }
 
     function getUser(address _userAddress) public view returns (UserData memory) {
