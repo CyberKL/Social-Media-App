@@ -2,48 +2,54 @@
 
 import React, { createContext, useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-//import Users from '../artifacts/contracts/Users.sol/Users.json';
+
+import { contractABI, contractAddress } from '@/utils/constants';
 
 const Web3Context = createContext();
 
-const Web3Provider = ({ children }) => {
-    const [provider, setProvider] = useState(null);
-    const [signer, setSigner] = useState(null);
-    const [contract, setContract] = useState(null);
-    const [account, setAccount] = useState(null);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
+const getContract = () => {
+    const provider = new ethers.provider.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+    const contract = new ethers.Contract(contractAddress, contractABI, signer);
+}
 
-    useEffect(() => {
-        const init = async () => {
-            if (window.ethereum) {
-                const provider = new ethers.providers.Web3Provider(window.ethereum);
-                setProvider(provider);
+export const Web3Provider = ({ children }) => {
+    const [connectedAccount, setConnectedAccount] = useState("")
 
-                const contractAddress = 'YOUR_CONTRACT_ADDRESS_HERE';
-                const contract = new ethers.Contract(contractAddress, Users.abi, provider);
-                setContract(contract);
+    const isWalletConnected = async () => {
+        try {
+            if(!window.ethereum) return alert('Please install metamask');
+        
+            const accounts = await window.ethereum.request({ method: 'eth_accounts' });
+
+            if(accounts.length) {
+                setConnectedAccount(accounts[0])
             }
-        };
-        init();
-    }, []);
+        } catch (error) {
+            console.error(error);
+            throw new Error("No ethereum object")
+        }
+    }
 
     const connectWallet = async () => {
-        const accounts = await provider.send("eth_requestAccounts", []);
-        setAccount(accounts[0]);
+        try {
+            if(!window.ethereum) return alert('Please install metamask');
 
-        const signer = provider.getSigner();
-        setSigner(signer);
-        setContract(contract.connect(signer));
+            const accounts = await window.ethereum.request({ method: 'eth_reqAccounts'});
+            setConnectedAccount(accounts[0]);
+        } catch(error) {
+            console.error(error);
+            throw new Error("No ethereum object")
+        }
+    }
 
-        const isRegistered = await contract.isRegisteredUser(accounts[0]);
-        setIsAuthenticated(isRegistered);
-    };
-
+    useEffect(() => {
+        isWalletConnected();
+    }, [])
+    
     return (
-        <Web3Context.Provider value={{ provider, signer, contract, account, isAuthenticated, connectWallet }}>
+        <Web3Context.Provider value={{ connectWallet, connectedAccount }}>
             {children}
         </Web3Context.Provider>
-    );
-};
-
-export { Web3Context, Web3Provider };
+    )
+}
