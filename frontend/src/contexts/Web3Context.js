@@ -20,6 +20,7 @@ export const Web3Provider = ({ children }) => {
     const [formData, setFormData] = useState({ username:'', bio:'' });
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [authenticating, setAuthenticating] = useState(true);
+    const [username, setUsername] = useState('')
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -30,12 +31,15 @@ export const Web3Provider = ({ children }) => {
         try {
             const userContract = await getUserContract();
             const userData = await userContract.getUser(address);
+            setUsername(userData.username);
             setIsAuthenticated(true);
         } catch (error) {
             if(!'User not registered' in error)
                 console.error(error);
-            else
+            else {
+                setUsername('');
                 setIsAuthenticated(false);
+            }
         }
     }
 
@@ -79,6 +83,7 @@ export const Web3Provider = ({ children }) => {
             const tx = await userContract.register(username, bio);
             await tx.wait();
             setIsAuthenticated(true);
+            setUsername(username);
             alert("User registered!");
             
         } catch (error) {
@@ -94,6 +99,7 @@ export const Web3Provider = ({ children }) => {
         } else {
             setConnectedAccount(null);
             setIsAuthenticated(false);
+            setUsername('');
         }
     };
 
@@ -109,7 +115,7 @@ export const Web3Provider = ({ children }) => {
     }, []);
     
     return (
-        <Web3Context.Provider value={{ connectWallet, connectedAccount, formData, handleChange, registerUser, isAuthenticated, authenticating }}>
+        <Web3Context.Provider value={{ connectWallet, connectedAccount, formData, handleChange, registerUser, isAuthenticated, authenticating, username }}>
             {children}
         </Web3Context.Provider>
     )
