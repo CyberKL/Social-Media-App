@@ -1,4 +1,4 @@
-import abi from '../../../backend/artifacts/contracts/User.sol/User.json'
+import userABI from '../../../backend/artifacts/contracts/User.sol/User.json'
 
-export const contractABI = abi.abi;
-export const contractAddress = '';
+export const userContractABI = userABI.abi;
+export const userContractAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
