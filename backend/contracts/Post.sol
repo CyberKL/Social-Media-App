@@ -22,7 +22,7 @@ contract Post {
     }
 
     function createPost(string memory _content) public {
-        string memory authorUsername = userContract.getUser(msg.sender).username;
+        ( ,string memory authorUsername, ) = userContract.getUser(msg.sender);
         posts.push(PostData(msg.sender, authorUsername, _content, block.timestamp));
     }
 

@@ -1,5 +1,5 @@
 import { Web3Context } from '@/contexts/Web3Context';
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 export default function Modal({ isVisible, onClose }) {
     const { formData, handleChange, registerUser } = useContext(Web3Context);
@@ -13,6 +13,19 @@ export default function Modal({ isVisible, onClose }) {
 
         registerUser();
     }
+
+    useEffect(() => {
+        if (isVisible) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+
+        // Clean up the overflow style when the component unmounts or modal closes
+        return () => {
+            document.body.style.overflow = 'auto';
+        };
+    }, [isVisible]);
 
     if(!isVisible) return null;
     return (

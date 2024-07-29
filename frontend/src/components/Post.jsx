@@ -13,10 +13,10 @@ export default function Post({ post }) {
                 </div>
                 <HiDotsHorizontal className='text-sm' />
             </div>
-            <Link href={`/posts/${id}`}>
+            <Link href=''>
                 <p className='text-white text-sm my-3'>{post?.content}</p>
             </Link>
-            <Link href={`/posts/${id}`}>
+            <Link href=''>
                 <img src={post?.image} className='rounded-2xl mr-2' />
             </Link>
         </div>

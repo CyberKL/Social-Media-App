@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
                   {children}
                 </div>
                 <div className="border-l border-gray-700 lg:flex-col p-3 h-screen hidden lg:flex w-[24rem]">
-                  <div className="sticky top-0 py-2">
+                  <div id="searchBar" className="py-2">
                     <input type="text" placeholder="Search" className="bg-gray-500 border border-gray-600 rounded-3xl text-sm w-full px-4 py-2" name="" id="" />
                   </div>
                   <Suggestions />

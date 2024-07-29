@@ -16,14 +16,23 @@ const getPostContract = async () => {
 }
 
 export default function PostInput() {
-  const { isAuthenticated, authenticating, username } = useContext(Web3Context);
+  const { isAuthenticated, authenticating } = useContext(Web3Context);
   const [text, setText] = useState('')
   const [postLoading, setPostLoading] = useState(false)
 
   const handleSubmit = async () => {
     setPostLoading(true);
-    const postContract = getPostContract();
-    const tx = await postContract.createPost(text, username);
+    try {
+      const postContract = await getPostContract();
+      const tx = await postContract.createPost(text);
+      await tx.wait();
+      setPostLoading(false);
+      setText('');
+      location.reload();
+    } catch (error) {
+      console.error(error);
+      throw new Error("No ethereum object")
+    }
   }
 
   if (!isAuthenticated || authenticating) return null;
@@ -31,7 +40,7 @@ export default function PostInput() {
     <div className="flex border-b border-gray-200 p-3 space-x-3 w-full">
       <div className="w-full divide-y divide-gray-200">
         <textarea
-          className="w-full border-none outline-none tracking-wide min0h-[50px] text-white"
+          className="w-full border-none outline-none tracking-wide min0h-[50px] text-white bg-black"
           rows="2"
           placeholder="What's happening"
           value={text}

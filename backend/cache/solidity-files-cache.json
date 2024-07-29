@@ -38,8 +38,8 @@
       ]
     },
     "D:\\MCIT\\Social-Media-App\\backend\\contracts\\Post.sol": {
-      "lastModificationDate": 1722116026236,
-      "contentHash": "9a87b0c805b59beb7aeb4925125e0648",
+      "lastModificationDate": 1722209522059,
+      "contentHash": "1496c287a2a0fc6715031dde86bdf1b2",
       "sourceName": "contracts/Post.sol",
       "solcConfig": {
         "version": "0.8.24",
@@ -70,12 +70,13 @@
         "^0.8.24"
       ],
       "artifacts": [
+        "IUser",
         "Post"
       ]
     },
     "D:\\MCIT\\Social-Media-App\\backend\\contracts\\User.sol": {
-      "lastModificationDate": 1722179830104,
-      "contentHash": "3644c945b7b0e29e14e63c7dc10d2e01",
+      "lastModificationDate": 1722209592437,
+      "contentHash": "eb80e3f32b4a841bfaf8cca6c8f06842",
       "sourceName": "contracts/User.sol",
       "solcConfig": {
         "version": "0.8.24",
