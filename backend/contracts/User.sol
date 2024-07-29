@@ -15,8 +15,9 @@ contract User {
         users[msg.sender] = UserData(true, _username, _bio);
     }
 
-    function getUser(address _userAddress) public view returns (UserData memory) {
+    function getUser(address _userAddress) public view returns (bool, string memory, string memory) {
         require(users[_userAddress].isRegistered, "User not registered");
-        return users[_userAddress];
+        UserData memory userData = users[_userAddress];
+        return (userData.isRegistered, userData.username, userData.bio);
     }
 }

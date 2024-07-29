@@ -1,8 +1,7 @@
 const { buildModule } = require("@nomicfoundation/hardhat-ignition/modules");
-const fs = require('fs');
 
 module.exports = buildModule("PostModule", (m) => {
-  const userAddress = JSON.parse(fs.readFileSync("./deployedAddress.json")).userAddress;
+  const userAddress = '0x5FbDB2315678afecb367f032d93F642f64180aa3';
 
   const post = m.contract("Post", [userAddress]);
 
